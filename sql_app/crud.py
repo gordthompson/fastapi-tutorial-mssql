@@ -33,7 +33,13 @@ def create_user(db: Session, user: schemas.UserCreate):
 
 
 def get_items(db: Session, skip: int = 0, limit: int = 100):
-    return db.query(models.Item).offset(skip).limit(limit).all()
+    return (
+        db.query(models.Item)
+        .order_by(models.Item.id)
+        .offset(skip)
+        .limit(limit)
+        .all()
+    )
 
 
 def create_user_item(db: Session, item: schemas.ItemCreate, user_id: int):
